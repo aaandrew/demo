@@ -1,0 +1,83 @@
+<head>
+  <title>Test</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.5/jquery.hammer.min.js'></script>
+
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<nav role="navigation">
+  <svg width="63px" height="40px" viewBox="0 0 206 131" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+		  <path d="M201.298267,124.806395 L203.370896,125.032839 L203.370895,24.5958041 L144.635259,83.5649668 L144.635259,83.5649668 L101.129104,5.71184587 L58.9699245,81.1545874 L58.9699245,81.1545874 L2.63512257,24.5958041 L2.63512152,112.711846 L2.62910361,112.711846 L2.62910361,124.711846 C2.62910361,124.711846 53.9871017,128.288154 104.939429,128.288154 C149.226124,128.288154 193.182082,125.372442 201.298267,124.806395 Z M201.298267,124.806395" id="Triangle-1" stroke="#3BA5E6" stroke-width="5" fill="#3BA5E6" sketch:type="MSShapeGroup"></path>
+	  </g>
+  </svg>
+</nav>
+<section>
+  <ul class="slider-list">
+    <li class="slide">
+      <p class="message"><span class="subject">Slide over dude!</span> I need some room to get...</p>
+      <time>2 mins ago</time>
+    </li>
+    <li class="slide">
+      <p class="message"><span class="subject">I like the way you move</span> All that dancing is making...</p>
+      <time>1 hour ago</time>
+    </li>
+    <li class="slide">
+      <p class="message"><span class="subject">Slipping, sliding</span> I just can't seem to stay on my</p>
+      <time>Yesterday 13:37</time>
+    </li>
+    <li class="slide">
+      <p class="message"><span class="subject">Blue is the new black</span> Just get your blues on and get to work.</p>
+      <time>22/10 14:46</time>
+    </li>
+    <li class="slide">
+      <p class="message"><span class="subject">E=mc2</span> At least that's what I was told to say...</p>
+      <time>23/3 13:33</time>
+    </li>
+		<li class="slide">
+      <p class="message"><span class="subject">Ain't no mountain high enough</span> Ain't no valley low enough...</p>
+      <time>2/7 1967</time>
+    </li>
+  </ul>
+</section>
+</body>
+<script>
+var ui_colors = {
+  cancel: '#FF0521',
+  ok:   '#00B636'
+}
+
+$('.slide').hammer().on('drag', function(event) {
+  var offset, zero;
+  // Prevent the browser from scrolling on mobile
+  event.gesture.preventDefault();
+  
+  // Calculate where left=0 in relation to the parent
+  offset = $('.slider-list').offset();
+  zero = offset.left;
+    
+  $(this).offset({ left: zero + event.gesture.deltaX });
+
+  if( event.gesture.deltaX < 0 ) {
+    $(this).parent().css('background', ui_colors.cancel);
+  } else {
+    $(this).parent().css('background', ui_colors.ok);
+  }
+}).on('swiperight',deleteElement)
+  .on('release',releaseFunction);
+
+function deleteElement(event){
+  var elmt = event.target;
+  event.gesture.stopDetect();
+  elmt.style.display = 'none';
+}
+
+function releaseFunction(event){
+  $(this).animate({ left: 0 }, 100, function () {
+    $(this).parent().css('background', '#fff');
+  });
+}
+
+
+</script>
